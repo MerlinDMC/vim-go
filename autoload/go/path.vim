@@ -110,6 +110,16 @@ function! go#path#Detect()
         endif
     endif
 
+    " GB
+    let gb_root = finddir("vendor", current_dir .";")
+    if !empty(gb_root)
+        let gb_vendor_path = join([fnamemodify(gb_root, ':p:h:h'), "vendor" ], go#util#PathSep())
+
+        if !go#path#HasPath(gb_vendor_path)
+            let gopath =  gb_vendor_path . go#util#PathListSep() . gopath
+        endif
+    endif
+
     return gopath
 endfunction
 
